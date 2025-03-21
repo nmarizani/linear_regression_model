@@ -1,0 +1,286 @@
+[
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "conint",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "confloat",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "constr",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "joblib",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "joblib",
+        "description": "joblib",
+        "detail": "joblib",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "CORSMiddleware",
+        "importPath": "fastapi.middleware.cors",
+        "description": "fastapi.middleware.cors",
+        "isExtraImport": true,
+        "detail": "fastapi.middleware.cors",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "train_test_split",
+        "importPath": "sklearn.model_selection",
+        "description": "sklearn.model_selection",
+        "isExtraImport": true,
+        "detail": "sklearn.model_selection",
+        "documentation": {}
+    },
+    {
+        "label": "StandardScaler",
+        "importPath": "sklearn.preprocessing",
+        "description": "sklearn.preprocessing",
+        "isExtraImport": true,
+        "detail": "sklearn.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "OneHotEncoder",
+        "importPath": "sklearn.preprocessing",
+        "description": "sklearn.preprocessing",
+        "isExtraImport": true,
+        "detail": "sklearn.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "ColumnTransformer",
+        "importPath": "sklearn.compose",
+        "description": "sklearn.compose",
+        "isExtraImport": true,
+        "detail": "sklearn.compose",
+        "documentation": {}
+    },
+    {
+        "label": "Pipeline",
+        "importPath": "sklearn.pipeline",
+        "description": "sklearn.pipeline",
+        "isExtraImport": true,
+        "detail": "sklearn.pipeline",
+        "documentation": {}
+    },
+    {
+        "label": "RandomForestClassifier",
+        "importPath": "sklearn.ensemble",
+        "description": "sklearn.ensemble",
+        "isExtraImport": true,
+        "detail": "sklearn.ensemble",
+        "documentation": {}
+    },
+    {
+        "label": "accuracy_score",
+        "importPath": "sklearn.metrics",
+        "description": "sklearn.metrics",
+        "isExtraImport": true,
+        "detail": "sklearn.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "CustomerData",
+        "kind": 6,
+        "importPath": "summative.API.prediction",
+        "description": "summative.API.prediction",
+        "peekOfCode": "class CustomerData(BaseModel):\n    CreditScore: conint(ge=300, le=850)\n    Geography: constr(strip_whitespace=True)\n    Gender: constr(strip_whitespace=True)\n    Age: conint(ge=18, le=100)\n    Tenure: conint(ge=0, le=10)\n    Balance: confloat(ge=0.0)\n    NumOfProducts: conint(ge=1, le=4)\n    HasCrCard: conint(ge=0, le=1)\n    IsActiveMember: conint(ge=0, le=1)",
+        "detail": "summative.API.prediction",
+        "documentation": {}
+    },
+    {
+        "label": "predict_churn",
+        "kind": 2,
+        "importPath": "summative.API.prediction",
+        "description": "summative.API.prediction",
+        "peekOfCode": "def predict_churn(data: CustomerData):\n    try:\n        # Convert input data to a DataFrame\n        input_df = pd.DataFrame([data.dict()])  \n        # Transform input data\n        transformed_data = preprocessor.transform(input_df)\n        # Make prediction\n        prediction = model.predict(transformed_data)\n        probability = model.predict_proba(transformed_data)[:, 1]  # Get probability of churn\n        return {\"churn_prediction\": int(prediction[0]), \"churn_probability\": round(float(probability[0]), 2)}",
+        "detail": "summative.API.prediction",
+        "documentation": {}
+    },
+    {
+        "label": "home",
+        "kind": 2,
+        "importPath": "summative.API.prediction",
+        "description": "summative.API.prediction",
+        "peekOfCode": "def home():\n    return {\n        \"Welcome to the Customer Churn Prediction API!\",\n        \"Visit /docs for the API documentation\",\n    }",
+        "detail": "summative.API.prediction",
+        "documentation": {}
+    },
+    {
+        "label": "preprocessor",
+        "kind": 5,
+        "importPath": "summative.API.prediction",
+        "description": "summative.API.prediction",
+        "peekOfCode": "preprocessor = joblib.load(\"preprocessor.pkl\")\nmodel = joblib.load(\"churn_model.pkl\")\n# Initialize FastAPI app\napp = FastAPI()\n# Configure CORS\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],  # Allow all origins for testing, modify for production\n    allow_credentials=True,\n    allow_methods=[\"*\"],",
+        "detail": "summative.API.prediction",
+        "documentation": {}
+    },
+    {
+        "label": "model",
+        "kind": 5,
+        "importPath": "summative.API.prediction",
+        "description": "summative.API.prediction",
+        "peekOfCode": "model = joblib.load(\"churn_model.pkl\")\n# Initialize FastAPI app\napp = FastAPI()\n# Configure CORS\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],  # Allow all origins for testing, modify for production\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],",
+        "detail": "summative.API.prediction",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "summative.API.prediction",
+        "description": "summative.API.prediction",
+        "peekOfCode": "app = FastAPI()\n# Configure CORS\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],  # Allow all origins for testing, modify for production\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n# Define input data schema",
+        "detail": "summative.API.prediction",
+        "documentation": {}
+    },
+    {
+        "label": "df",
+        "kind": 5,
+        "importPath": "summative.API.preprocessing",
+        "description": "summative.API.preprocessing",
+        "peekOfCode": "df = pd.read_csv(\"Churn_Modelling.csv\")\n# Drop irrelevant columns\ndf.drop(columns=[\"RowNumber\", \"CustomerId\", \"Surname\"], inplace=True)\n# Define features and target\nX = df.drop(columns=[\"Exited\"])\ny = df[\"Exited\"]\n# Define preprocessing steps\ncategorical_features = [\"Geography\", \"Gender\"]\nnumerical_features = [\"CreditScore\", \"Age\", \"Tenure\", \"Balance\", \"NumOfProducts\", \"HasCrCard\", \"IsActiveMember\", \"EstimatedSalary\"]\npreprocessor = ColumnTransformer([",
+        "detail": "summative.API.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "X",
+        "kind": 5,
+        "importPath": "summative.API.preprocessing",
+        "description": "summative.API.preprocessing",
+        "peekOfCode": "X = df.drop(columns=[\"Exited\"])\ny = df[\"Exited\"]\n# Define preprocessing steps\ncategorical_features = [\"Geography\", \"Gender\"]\nnumerical_features = [\"CreditScore\", \"Age\", \"Tenure\", \"Balance\", \"NumOfProducts\", \"HasCrCard\", \"IsActiveMember\", \"EstimatedSalary\"]\npreprocessor = ColumnTransformer([\n    (\"num\", StandardScaler(), numerical_features),\n    (\"cat\", OneHotEncoder(drop='first'), categorical_features)\n])\n# Split dataset",
+        "detail": "summative.API.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "y",
+        "kind": 5,
+        "importPath": "summative.API.preprocessing",
+        "description": "summative.API.preprocessing",
+        "peekOfCode": "y = df[\"Exited\"]\n# Define preprocessing steps\ncategorical_features = [\"Geography\", \"Gender\"]\nnumerical_features = [\"CreditScore\", \"Age\", \"Tenure\", \"Balance\", \"NumOfProducts\", \"HasCrCard\", \"IsActiveMember\", \"EstimatedSalary\"]\npreprocessor = ColumnTransformer([\n    (\"num\", StandardScaler(), numerical_features),\n    (\"cat\", OneHotEncoder(drop='first'), categorical_features)\n])\n# Split dataset\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)",
+        "detail": "summative.API.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "categorical_features",
+        "kind": 5,
+        "importPath": "summative.API.preprocessing",
+        "description": "summative.API.preprocessing",
+        "peekOfCode": "categorical_features = [\"Geography\", \"Gender\"]\nnumerical_features = [\"CreditScore\", \"Age\", \"Tenure\", \"Balance\", \"NumOfProducts\", \"HasCrCard\", \"IsActiveMember\", \"EstimatedSalary\"]\npreprocessor = ColumnTransformer([\n    (\"num\", StandardScaler(), numerical_features),\n    (\"cat\", OneHotEncoder(drop='first'), categorical_features)\n])\n# Split dataset\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n# Fit preprocessor\nX_train = preprocessor.fit_transform(X_train)",
+        "detail": "summative.API.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "numerical_features",
+        "kind": 5,
+        "importPath": "summative.API.preprocessing",
+        "description": "summative.API.preprocessing",
+        "peekOfCode": "numerical_features = [\"CreditScore\", \"Age\", \"Tenure\", \"Balance\", \"NumOfProducts\", \"HasCrCard\", \"IsActiveMember\", \"EstimatedSalary\"]\npreprocessor = ColumnTransformer([\n    (\"num\", StandardScaler(), numerical_features),\n    (\"cat\", OneHotEncoder(drop='first'), categorical_features)\n])\n# Split dataset\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n# Fit preprocessor\nX_train = preprocessor.fit_transform(X_train)\nX_test = preprocessor.transform(X_test)",
+        "detail": "summative.API.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "preprocessor",
+        "kind": 5,
+        "importPath": "summative.API.preprocessing",
+        "description": "summative.API.preprocessing",
+        "peekOfCode": "preprocessor = ColumnTransformer([\n    (\"num\", StandardScaler(), numerical_features),\n    (\"cat\", OneHotEncoder(drop='first'), categorical_features)\n])\n# Split dataset\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n# Fit preprocessor\nX_train = preprocessor.fit_transform(X_train)\nX_test = preprocessor.transform(X_test)\n# Save processed data and transformer",
+        "detail": "summative.API.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "X_train",
+        "kind": 5,
+        "importPath": "summative.API.preprocessing",
+        "description": "summative.API.preprocessing",
+        "peekOfCode": "X_train = preprocessor.fit_transform(X_train)\nX_test = preprocessor.transform(X_test)\n# Save processed data and transformer\njoblib.dump((X_train, X_test, y_train, y_test), \"processed_data.pkl\")\njoblib.dump(preprocessor, \"preprocessor.pkl\")\nprint(\"Preprocessing complete. Data saved.\")",
+        "detail": "summative.API.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "X_test",
+        "kind": 5,
+        "importPath": "summative.API.preprocessing",
+        "description": "summative.API.preprocessing",
+        "peekOfCode": "X_test = preprocessor.transform(X_test)\n# Save processed data and transformer\njoblib.dump((X_train, X_test, y_train, y_test), \"processed_data.pkl\")\njoblib.dump(preprocessor, \"preprocessor.pkl\")\nprint(\"Preprocessing complete. Data saved.\")",
+        "detail": "summative.API.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "model",
+        "kind": 5,
+        "importPath": "summative.API.train_churn",
+        "description": "summative.API.train_churn",
+        "peekOfCode": "model = RandomForestClassifier(n_estimators=100, random_state=42)\nmodel.fit(X_train, y_train)\n# Evaluate model\npredictions = model.predict(X_test)\naccuracy = accuracy_score(y_test, predictions)\nprint(f\"Model Accuracy: {accuracy:.4f}\")\n# Save trained model\njoblib.dump(model, \"churn_model.pkl\")\nprint(\"Model training complete. Model saved as churn_model.pkl\")",
+        "detail": "summative.API.train_churn",
+        "documentation": {}
+    },
+    {
+        "label": "predictions",
+        "kind": 5,
+        "importPath": "summative.API.train_churn",
+        "description": "summative.API.train_churn",
+        "peekOfCode": "predictions = model.predict(X_test)\naccuracy = accuracy_score(y_test, predictions)\nprint(f\"Model Accuracy: {accuracy:.4f}\")\n# Save trained model\njoblib.dump(model, \"churn_model.pkl\")\nprint(\"Model training complete. Model saved as churn_model.pkl\")",
+        "detail": "summative.API.train_churn",
+        "documentation": {}
+    },
+    {
+        "label": "accuracy",
+        "kind": 5,
+        "importPath": "summative.API.train_churn",
+        "description": "summative.API.train_churn",
+        "peekOfCode": "accuracy = accuracy_score(y_test, predictions)\nprint(f\"Model Accuracy: {accuracy:.4f}\")\n# Save trained model\njoblib.dump(model, \"churn_model.pkl\")\nprint(\"Model training complete. Model saved as churn_model.pkl\")",
+        "detail": "summative.API.train_churn",
+        "documentation": {}
+    }
+]
