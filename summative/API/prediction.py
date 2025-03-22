@@ -13,10 +13,10 @@ model = joblib.load("churn_model.pkl")
 # Initialize FastAPI app
 app = FastAPI()
 
-# Configure CORS
+# Allow Flutter frontend to access FastAPI
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for testing, modify for production
+    allow_origins=["*"],  # Change this to your frontend URL if needed
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

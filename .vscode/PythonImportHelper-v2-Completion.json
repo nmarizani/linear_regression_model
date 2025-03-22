@@ -504,7 +504,7 @@
         "kind": 5,
         "importPath": "summative.API.prediction",
         "description": "summative.API.prediction",
-        "peekOfCode": "preprocessor = joblib.load(\"preprocessor.pkl\")\nmodel = joblib.load(\"churn_model.pkl\")\n# Initialize FastAPI app\napp = FastAPI()\n# Configure CORS\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],  # Allow all origins for testing, modify for production\n    allow_credentials=True,\n    allow_methods=[\"*\"],",
+        "peekOfCode": "preprocessor = joblib.load(\"preprocessor.pkl\")\nmodel = joblib.load(\"churn_model.pkl\")\n# Initialize FastAPI app\napp = FastAPI()\n# Allow Flutter frontend to access FastAPI\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],  # Change this to your frontend URL if needed\n    allow_credentials=True,\n    allow_methods=[\"*\"],",
         "detail": "summative.API.prediction",
         "documentation": {}
     },
@@ -513,7 +513,7 @@
         "kind": 5,
         "importPath": "summative.API.prediction",
         "description": "summative.API.prediction",
-        "peekOfCode": "model = joblib.load(\"churn_model.pkl\")\n# Initialize FastAPI app\napp = FastAPI()\n# Configure CORS\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],  # Allow all origins for testing, modify for production\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],",
+        "peekOfCode": "model = joblib.load(\"churn_model.pkl\")\n# Initialize FastAPI app\napp = FastAPI()\n# Allow Flutter frontend to access FastAPI\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],  # Change this to your frontend URL if needed\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],",
         "detail": "summative.API.prediction",
         "documentation": {}
     },
@@ -522,7 +522,7 @@
         "kind": 5,
         "importPath": "summative.API.prediction",
         "description": "summative.API.prediction",
-        "peekOfCode": "app = FastAPI()\n# Configure CORS\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],  # Allow all origins for testing, modify for production\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n# Define input data schema",
+        "peekOfCode": "app = FastAPI()\n# Allow Flutter frontend to access FastAPI\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],  # Change this to your frontend URL if needed\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n# Define input data schema",
         "detail": "summative.API.prediction",
         "documentation": {}
     },
