@@ -10,17 +10,31 @@ class ResultPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text("Prediction Result")),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Prediction Result:", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-            Text(prediction, style: TextStyle(fontSize: 32, color: Colors.blue)),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text("Back"),
-            )
-          ],
+        child: Card(
+          elevation: 10,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          margin: EdgeInsets.all(20),
+          child: Padding(
+            padding: EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text("Churn Prediction", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                SizedBox(height: 10),
+                Text(prediction == "1" ? "Customer is likely to churn" : "Customer is unlikely to churn",
+                    style: TextStyle(fontSize: 18, color: prediction == "1" ? Colors.red : Colors.green)),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () => Navigator.pop(context),
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    backgroundColor: Colors.blueAccent,
+                  ),
+                  child: Text("Back", style: TextStyle(fontSize: 16)),
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );

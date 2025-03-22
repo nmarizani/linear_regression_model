@@ -13,92 +13,140 @@ class _HomePageState extends State<HomePage> {
 
   // Controllers for input fields
   final TextEditingController creditScoreController = TextEditingController();
-  final TextEditingController geographyController = TextEditingController();
-  final TextEditingController genderController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
   final TextEditingController tenureController = TextEditingController();
   final TextEditingController balanceController = TextEditingController();
   final TextEditingController numOfProductsController = TextEditingController();
-  final TextEditingController hasCrCardController = TextEditingController();
-  final TextEditingController isActiveMemberController = TextEditingController();
   final TextEditingController estimatedSalaryController = TextEditingController();
+
+  // Dropdown values
+  String selectedGeography = "France";
+  String selectedGender = "Male";
+  String selectedHasCrCard = "1";
+  String selectedIsActiveMember = "1";
 
   // Function to send prediction request
   Future<void> predictChurn() async {
-  final url = Uri.parse("https://customer-churn-prediction-pfei.onrender.com/predict");
+    final url = Uri.parse("https://customer-churn-prediction-6kqk.onrender.com/predict");
 
-  Map<String, dynamic> inputData = {
-    "CreditScore": int.parse(creditScoreController.text),
-    "Geography": geographyController.text,
-    "Gender": genderController.text,
-    "Age": int.parse(ageController.text),
-    "Tenure": int.parse(tenureController.text),
-    "Balance": double.parse(balanceController.text),
-    "NumOfProducts": int.parse(numOfProductsController.text),
-    "HasCrCard": int.parse(hasCrCardController.text),
-    "IsActiveMember": int.parse(isActiveMemberController.text),
-    "EstimatedSalary": double.parse(estimatedSalaryController.text)
-  };
+    Map<String, dynamic> inputData = {
+      "CreditScore": int.parse(creditScoreController.text),
+      "Geography": selectedGeography,
+      "Gender": selectedGender,
+      "Age": int.parse(ageController.text),
+      "Tenure": int.parse(tenureController.text),
+      "Balance": double.parse(balanceController.text),
+      "NumOfProducts": int.parse(numOfProductsController.text),
+      "HasCrCard": int.parse(selectedHasCrCard),
+      "IsActiveMember": int.parse(selectedIsActiveMember),
+      "EstimatedSalary": double.parse(estimatedSalaryController.text)
+    };
 
-  try {
-    print("Sending data: ${jsonEncode(inputData)}"); // Debugging
-
-    final response = await http.post(
-      url,
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode(inputData),
-    );
-
-    print("Response Code: ${response.statusCode}");
-    print("Response Body: ${response.body}");
-
-    if (response.statusCode == 200) {
-      final responseData = jsonDecode(response.body);
-      String prediction = responseData['predicted_value'].toString();
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => ResultPage(prediction: prediction)),
+    try {
+      final response = await http.post(
+        url,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(inputData),
       );
-    } else {
-      throw Exception("API Error: ${response.statusCode}");
-    }
-  } catch (error) {
-    print("Error: $error");  // Debugging
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Error: $error")),
-    );
-  }
-}
 
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        String prediction = responseData['churn_prediction'].toString();
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ResultPage(prediction: prediction)),
+        );
+      } else {
+        throw Exception("API Error: ${response.statusCode}");
+      }
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: $error")),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Churn Prediction")),
+      appBar: AppBar(title: Text("Churn Prediction", style: TextStyle(fontWeight: FontWeight.bold))),
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(controller: creditScoreController, decoration: InputDecoration(labelText: "Credit Score")),
-              TextFormField(controller: geographyController, decoration: InputDecoration(labelText: "Geography")),
-              TextFormField(controller: genderController, decoration: InputDecoration(labelText: "Gender (Male/Female)")),
-              TextFormField(controller: ageController, decoration: InputDecoration(labelText: "Age")),
-              TextFormField(controller: tenureController, decoration: InputDecoration(labelText: "Tenure")),
-              TextFormField(controller: balanceController, decoration: InputDecoration(labelText: "Balance")),
-              TextFormField(controller: numOfProductsController, decoration: InputDecoration(labelText: "Number of Products")),
-              TextFormField(controller: hasCrCardController, decoration: InputDecoration(labelText: "Has Credit Card (1/0)")),
-              TextFormField(controller: isActiveMemberController, decoration: InputDecoration(labelText: "Is Active Member (1/0)")),
-              TextFormField(controller: estimatedSalaryController, decoration: InputDecoration(labelText: "Estimated Salary")),
-              SizedBox(height: 20),
-              ElevatedButton(onPressed: predictChurn, child: Text("Predict"))
-            ],
+        child: SingleChildScrollView(
+          child: Card(
+            elevation: 8,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Text("Enter Customer Details", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    SizedBox(height: 20),
+                    
+                    _buildTextField(creditScoreController, "Credit Score"),
+                    _buildDropdown(["France", "Germany", "Spain"], selectedGeography, "Geography", (val) => setState(() => selectedGeography = val!)),
+                    _buildDropdown(["Male", "Female"], selectedGender, "Gender", (val) => setState(() => selectedGender = val!)),
+                    _buildTextField(ageController, "Age"),
+                    _buildTextField(tenureController, "Tenure"),
+                    _buildTextField(balanceController, "Balance"),
+                    _buildTextField(numOfProductsController, "Number of Products"),
+                    _buildDropdown(["1", "0"], selectedHasCrCard, "Has Credit Card?", (val) => setState(() => selectedHasCrCard = val!)),
+                    _buildDropdown(["1", "0"], selectedIsActiveMember, "Is Active Member?", (val) => setState(() => selectedIsActiveMember = val!)),
+                    _buildTextField(estimatedSalaryController, "Estimated Salary"),
+                    
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: predictChurn,
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 32),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        backgroundColor: Colors.blueAccent,
+                      ),
+                      child: Text("Predict", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
       ),
     );
   }
-}
 
+  Widget _buildTextField(TextEditingController controller, String label) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 15),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          filled: true,
+          fillColor: Colors.grey[200],
+        ),
+        keyboardType: TextInputType.number,
+      ),
+    );
+  }
+
+  Widget _buildDropdown(List<String> items, String selectedValue, String label, ValueChanged<String?> onChanged) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 15),
+      child: DropdownButtonFormField<String>(
+        value: selectedValue,
+        decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          filled: true,
+          fillColor: Colors.grey[200],
+        ),
+        items: items.map((e) => DropdownMenuItem(child: Text(e), value: e)).toList(),
+        onChanged: onChanged,
+      ),
+    );
+  }
+}
