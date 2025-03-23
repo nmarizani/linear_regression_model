@@ -35,6 +35,7 @@ https://customer-churn-prediction-6kqk.onrender.com
 ## How to Test in Swagger UI
 **Open Swagger UI.**
 Access API Docs:https://customer-churn-prediction-6kqk.onrender.com/docs
+
 Click on POST /predict.
 Click Try it out and enter sample input.
 {
@@ -55,6 +56,7 @@ Click Execute and check the response.
 **Installation & Running the App**
 Clone this repository
 git clone https://github.com/nmarizani/linear_regression_model.git
+
 cd summative/FlutterApp/churn_prediction_app
 
 **Install dependencies**
